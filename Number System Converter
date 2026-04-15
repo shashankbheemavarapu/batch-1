@@ -1,0 +1,38 @@
+import java.util.*;
+
+public class NumberConverter {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\n1.Dec->Bin 2.Bin->Dec 3.Dec->Hex 4.Exit");
+            int ch = sc.nextInt();
+
+            switch (ch) {
+                case 1:
+                    System.out.print("Enter Decimal: ");
+                    int d = sc.nextInt();
+                    System.out.println("Binary: " + Integer.toBinaryString(d));
+                    break;
+
+                case 2:
+                    System.out.print("Enter Binary: ");
+                    String b = sc.next();
+                    if (b.matches("[01]+"))
+                        System.out.println("Decimal: " + Integer.parseInt(b, 2));
+                    else
+                        System.out.println("Invalid Binary");
+                    break;
+
+                case 3:
+                    System.out.print("Enter Decimal: ");
+                    int h = sc.nextInt();
+                    System.out.println("Hex: " + Integer.toHexString(h));
+                    break;
+
+                case 4:
+                    return;
+            }
+        }
+    }
+}
