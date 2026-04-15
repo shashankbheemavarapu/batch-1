@@ -1,0 +1,63 @@
+import java.util.*;
+
+class Ticket {
+    int ticketId;
+    String name;
+    int seatNo;
+
+    Ticket(int ticketId, String name, int seatNo) {
+        this.ticketId = ticketId;
+        this.name = name;
+        this.seatNo = seatNo;
+    }
+}
+
+public class RailwaySystem {
+    static ArrayList<Ticket> tickets = new ArrayList<>();
+    static int totalSeats = 5;
+    static int ticketCounter = 1;
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("\n1.Book 2.Cancel 3.Available 4.Exit");
+            int ch = sc.nextInt();
+            sc.nextLine();
+
+            switch (ch) {
+                case 1: book(); break;
+                case 2: cancel(); break;
+                case 3: available(); break;
+                case 4: return;
+            }
+        }
+    }
+
+    static void book() {
+        if (tickets.size() >= totalSeats) {
+            System.out.println("No Seats Available");
+            return;
+        }
+
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine();
+
+        int seatNo = tickets.size() + 1;
+        Ticket t = new Ticket(ticketCounter++, name, seatNo);
+        tickets.add(t);
+
+        System.out.println("Booked! Ticket ID: " + t.ticketId + " Seat: " + seatNo);
+    }
+
+    static void cancel() {
+        System.out.print("Enter Ticket ID: ");
+        int id = sc.nextInt();
+
+        tickets.removeIf(t -> t.ticketId == id);
+        System.out.println("Cancelled (if existed)");
+    }
+
+    static void available() {
+        System.out.println("Available Seats: " + (totalSeats - tickets.size()));
+    }
+}
