@@ -1,0 +1,55 @@
+import java.util.*;
+
+class Question {
+    String question;
+    String[] options;
+    int answer; 
+
+    Question(String q, String[] opt, int ans) {
+        question = q;
+        options = opt;
+        answer = ans;
+    }
+}
+
+public class QuizApp {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        ArrayList<Question> quiz = new ArrayList<>();
+
+        
+        quiz.add(new Question("Capital of India?",
+                new String[]{"1.Delhi", "2.Mumbai", "3.Chennai", "4.Kolkata"}, 1));
+
+        quiz.add(new Question("2 + 2 = ?",
+                new String[]{"1.3", "2.4", "3.5", "4.6"}, 2));
+
+        int score = 0;
+        int i = 1;
+
+        for (Question q : quiz) {
+            System.out.println("\nQ" + i + ": " + q.question);
+            for (String opt : q.options) {
+                System.out.println(opt);
+            }
+
+            int ans = sc.nextInt();
+
+            if (ans == q.answer) {
+                score++;
+            }
+            i++;
+        }
+
+        System.out.println("\nYour Score: " + score + "/" + quiz.size());
+
+        
+        System.out.println("\nCorrect Answers:");
+        i = 1;
+        for (Question q : quiz) {
+            System.out.println("Q" + i + ": Option " + q.answer);
+            i++;
+        }
+    }
+}
