@@ -1,0 +1,83 @@
+import java.util.*;
+
+class Room {
+    int roomNo;
+    String type; 
+    boolean booked;
+    String customer;
+
+    Room(int roomNo, String type) {
+        this.roomNo = roomNo;
+        this.type = type;
+        this.booked = false;
+    }
+}
+
+public class HotelSystem {
+    static ArrayList<Room> rooms = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        
+        rooms.add(new Room(101, "AC"));
+        rooms.add(new Room(102, "Non-AC"));
+        rooms.add(new Room(103, "AC"));
+
+        while (true) {
+            System.out.println("\n1.Book 2.Cancel 3.Available 4.Exit");
+            int ch = sc.nextInt();
+            sc.nextLine();
+
+            switch (ch) {
+                case 1: book(); break;
+                case 2: cancel(); break;
+                case 3: showAvailable(); break;
+                case 4: return;
+            }
+        }
+    }
+
+    static void book() {
+        System.out.print("Enter Room No: ");
+        int rno = sc.nextInt(); sc.nextLine();
+
+        for (Room r : rooms) {
+            if (r.roomNo == rno) {
+                if (!r.booked) {
+                    System.out.print("Customer Name: ");
+                    r.customer = sc.nextLine();
+                    r.booked = true;
+                    System.out.println("Room Booked");
+                } else {
+                    System.out.println("Already Booked");
+                }
+                return;
+            }
+        }
+        System.out.println("Room Not Found");
+    }
+
+    static void cancel() {
+        System.out.print("Enter Room No: ");
+        int rno = sc.nextInt();
+
+        for (Room r : rooms) {
+            if (r.roomNo == rno && r.booked) {
+                r.booked = false;
+                r.customer = null;
+                System.out.println("Booking Cancelled");
+                return;
+            }
+        }
+        System.out.println("Invalid Room / Not Booked");
+    }
+
+    static void showAvailable() {
+        for (Room r : rooms) {
+            if (!r.booked) {
+                System.out.println(r.roomNo + " " + r.type);
+            }
+        }
+    }
+}
