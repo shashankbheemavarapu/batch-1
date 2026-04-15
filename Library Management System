@@ -1,0 +1,106 @@
+import java.util.*;
+
+class Book {
+    int id;
+    String title, author;
+    boolean issued;
+
+    Book(int id, String title, String author) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.issued = false;
+    }
+}
+
+public class LibrarySystem {
+    static ArrayList<Book> books = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("\n1.Add 2.Issue 3.Return 4.Display 5.Search 6.Exit");
+            int ch = sc.nextInt();
+            sc.nextLine();
+
+            switch (ch) {
+                case 1: addBook(); break;
+                case 2: issueBook(); break;
+                case 3: returnBook(); break;
+                case 4: display(); break;
+                case 5: search(); break;
+                case 6: return;
+                default: System.out.println("Invalid");
+            }
+        }
+    }
+
+    static void addBook() {
+        System.out.print("ID: ");
+        int id = sc.nextInt(); sc.nextLine();
+
+        System.out.print("Title: ");
+        String title = sc.nextLine();
+
+        System.out.print("Author: ");
+        String author = sc.nextLine();
+
+        books.add(new Book(id, title, author));
+        System.out.println("Book Added");
+    }
+
+    static void issueBook() {
+        System.out.print("Enter Book ID: ");
+        int id = sc.nextInt();
+
+        for (Book b : books) {
+            if (b.id == id) {
+                if (!b.issued) {
+                    b.issued = true;
+                    System.out.println("Book Issued");
+                } else {
+                    System.out.println("Already Issued");
+                }
+                return;
+            }
+        }
+        System.out.println("Book Not Found");
+    }
+
+    static void returnBook() {
+        System.out.print("Enter Book ID: ");
+        int id = sc.nextInt();
+
+        for (Book b : books) {
+            if (b.id == id) {
+                if (b.issued) {
+                    b.issued = false;
+                    System.out.println("Book Returned");
+                } else {
+                    System.out.println("Book was not issued");
+                }
+                return;
+            }
+        }
+        System.out.println("Book Not Found");
+    }
+
+    static void display() {
+        for (Book b : books) {
+            if (!b.issued) {
+                System.out.println(b.id + " " + b.title + " " + b.author);
+            }
+        }
+    }
+
+    static void search() {
+        System.out.print("Enter Title/Author: ");
+        String key = sc.nextLine().toLowerCase();
+
+        for (Book b : books) {
+            if (b.title.toLowerCase().contains(key) || b.author.toLowerCase().contains(key)) {
+                System.out.println(b.id + " " + b.title + " " + b.author + " Issued:" + b.issued);
+            }
+        }
+    }
+}
