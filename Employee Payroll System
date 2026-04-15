@@ -1,0 +1,84 @@
+import java.util.*;
+
+abstract class Employee {
+    int id;
+    String name;
+    double baseSalary;
+
+    Employee(int id, String name, double baseSalary) {
+        this.id = id;
+        this.name = name;
+        this.baseSalary = baseSalary;
+    }
+
+    abstract double calculateGross();
+
+    double calculateTax(double gross) {
+        if (gross > 80000) return gross * 0.20;
+        else if (gross > 50000) return gross * 0.10;
+        else return gross * 0.05;
+    }
+
+    void generateSlip() {
+        double gross = calculateGross();
+        double tax = calculateTax(gross);
+        double net = gross - tax;
+
+        System.out.println("\n--- Salary Slip ---");
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Base Salary: " + baseSalary);
+        System.out.println("Gross Salary: " + gross);
+        System.out.println("Tax: " + tax);
+        System.out.println("Net Salary: " + net);
+    }
+}
+
+class Manager extends Employee {
+    Manager(int id, String name, double baseSalary) {
+        super(id, name, baseSalary);
+    }
+
+    double calculateGross() {
+        return baseSalary + (0.30 * baseSalary); 
+    }
+}
+
+class Developer extends Employee {
+    Developer(int id, String name, double baseSalary) {
+        super(id, name, baseSalary);
+    }
+
+    double calculateGross() {
+        return baseSalary + (0.20 * baseSalary); 
+    }
+}
+
+public class PayrollSystem {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("1.Manager 2.Developer");
+        int type = sc.nextInt();
+
+        System.out.print("Enter ID: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Base Salary: ");
+        double salary = sc.nextDouble();
+
+        Employee emp;
+
+        if (type == 1) {
+            emp = new Manager(id, name, salary);
+        } else {
+            emp = new Developer(id, name, salary);
+        }
+
+        emp.generateSlip();
+    }
+}
