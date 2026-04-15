@@ -1,0 +1,85 @@
+import java.util.*;
+
+class Bus {
+    int busNo;
+    boolean[] seats;
+
+    Bus(int busNo, int totalSeats) {
+        this.busNo = busNo;
+        seats = new boolean[totalSeats];
+    }
+}
+
+public class BusSystem {
+    static ArrayList<Bus> buses = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        buses.add(new Bus(1, 5));
+        buses.add(new Bus(2, 5));
+
+        while (true) {
+            System.out.println("\n1.Book 2.Cancel 3.Status 4.Exit");
+            int ch = sc.nextInt();
+
+            switch (ch) {
+                case 1: book(); break;
+                case 2: cancel(); break;
+                case 3: status(); break;
+                case 4: return;
+            }
+        }
+    }
+
+    static Bus findBus(int busNo) {
+        for (Bus b : buses) {
+            if (b.busNo == busNo) return b;
+        }
+        return null;
+    }
+
+    static void book() {
+        System.out.print("Bus No: ");
+        int bno = sc.nextInt();
+
+        Bus b = findBus(bno);
+        if (b != null) {
+            System.out.print("Seat No: ");
+            int seat = sc.nextInt();
+
+            if (!b.seats[seat - 1]) {
+                b.seats[seat - 1] = true;
+                System.out.println("Booked");
+            } else {
+                System.out.println("Already Booked");
+            }
+        } else System.out.println("Bus Not Found");
+    }
+
+    static void cancel() {
+        System.out.print("Bus No: ");
+        int bno = sc.nextInt();
+
+        Bus b = findBus(bno);
+        if (b != null) {
+            System.out.print("Seat No: ");
+            int seat = sc.nextInt();
+
+            b.seats[seat - 1] = false;
+            System.out.println("Cancelled");
+        }
+    }
+
+    static void status() {
+        System.out.print("Bus No: ");
+        int bno = sc.nextInt();
+
+        Bus b = findBus(bno);
+        if (b != null) {
+            for (int i = 0; i < b.seats.length; i++) {
+                System.out.println("Seat " + (i + 1) + ": " + (b.seats[i] ? "Booked" : "Available"));
+            }
+        }
+    }
+}
