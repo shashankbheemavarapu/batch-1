@@ -1,0 +1,61 @@
+import java.util.*;
+
+public class ATMSimulation {
+    static double balance = 5000;
+    static int PIN = 1234;
+    static int attempts = 0;
+    static double dailyLimit = 2000;
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        while (attempts < 3) {
+            System.out.print("Enter PIN: ");
+            int pin = sc.nextInt();
+
+            if (pin == PIN) {
+                menu(sc);
+                return;
+            } else {
+                attempts++;
+                System.out.println("Wrong PIN");
+            }
+        }
+        System.out.println("Card Blocked");
+    }
+
+    static void menu(Scanner sc) {
+        while (true) {
+            System.out.println("\n1.Withdraw 2.Deposit 3.Balance 4.Exit");
+            int ch = sc.nextInt();
+
+            switch (ch) {
+                case 1: withdraw(sc); break;
+                case 2: deposit(sc); break;
+                case 3: System.out.println("Balance: " + balance); break;
+                case 4: return;
+            }
+        }
+    }
+
+    static void withdraw(Scanner sc) {
+        System.out.print("Enter amount: ");
+        double amt = sc.nextDouble();
+
+        if (amt > dailyLimit) {
+            System.out.println("Exceeds daily limit");
+        } else if (amt <= balance) {
+            balance -= amt;
+            System.out.println("Withdrawn");
+        } else {
+            System.out.println("Insufficient Balance");
+        }
+    }
+
+    static void deposit(Scanner sc) {
+        System.out.print("Enter amount: ");
+        double amt = sc.nextDouble();
+        balance += amt;
+        System.out.println("Deposited");
+    }
+}
