@@ -1,0 +1,82 @@
+import java.util.*;
+
+class Product {
+    int id;
+    String name;
+    double price;
+
+    Product(int id, String name, double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+}
+
+public class EcommerceSystem {
+    static ArrayList<Product> catalog = new ArrayList<>();
+    static ArrayList<Product> cart = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        
+        catalog.add(new Product(1, "Shirt", 1000));
+        catalog.add(new Product(2, "Shoes", 2000));
+        catalog.add(new Product(3, "Watch", 1500));
+
+        while (true) {
+            System.out.println("\n1.View 2.Add 3.Remove 4.Bill 5.Exit");
+            int ch = sc.nextInt();
+
+            switch (ch) {
+                case 1: viewCatalog(); break;
+                case 2: addToCart(); break;
+                case 3: removeFromCart(); break;
+                case 4: bill(); break;
+                case 5: return;
+            }
+        }
+    }
+
+    static void viewCatalog() {
+        for (Product p : catalog) {
+            System.out.println(p.id + " " + p.name + " " + p.price);
+        }
+    }
+
+    static void addToCart() {
+        System.out.print("Enter Product ID: ");
+        int id = sc.nextInt();
+
+        for (Product p : catalog) {
+            if (p.id == id) {
+                cart.add(p);
+                System.out.println("Added to Cart");
+                return;
+            }
+        }
+        System.out.println("Product Not Found");
+    }
+
+    static void removeFromCart() {
+        System.out.print("Enter Product ID: ");
+        int id = sc.nextInt();
+
+        cart.removeIf(p -> p.id == id);
+        System.out.println("Removed (if existed)");
+    }
+
+    static void bill() {
+        double total = 0;
+        for (Product p : cart) {
+            total += p.price;
+        }
+
+      
+        if (total > 3000) {
+            total *= 0.9; // 10% discount
+        }
+
+        System.out.println("Total Bill: " + total);
+    }
+}
